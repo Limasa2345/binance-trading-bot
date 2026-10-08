@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 
 
@@ -16,7 +15,7 @@ class TrendStrategy:
         loss = -delta.clip(upper=0)
         avg_gain = gain.ewm(com=period - 1, adjust=False).mean()
         avg_loss = loss.ewm(com=period - 1, adjust=False).mean()
-        rs = avg_gain / avg_loss.replace(0, np.nan)
+        rs = avg_gain / avg_loss.replace(0, 1e-9)
         rsi = 100 - (100 / (1 + rs))
         return rsi.fillna(50)
 
